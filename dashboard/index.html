@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols, ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="dot" aria-hidden="true"></span><div>
+    <h1>Token Launch Radar</h1>
+    <p>Protocols that record no token yet — ranked by what a token would be worth if the record stayed as it is.</p>
+  </div></div>
+  <dl class="stats" id="stats"></dl>
+</header>
+
+<main>
+  <section class="model" aria-label="Value model">
+    <h2>How the value is worked out</h2>
+    <p class="formula" id="formula"></p>
+    <ul class="factors">
+      <li><b>Sector multiple</b> — FDV/TVL assumption by category, 0.22–0.34.</li>
+      <li><b>Growth</b> — 7-day TVL change, clamped to −50%…+150%.</li>
+      <li><b>Age</b> — days tracked with no token, up to 4 years of credit.</li>
+      <li><b>Chains</b> — up to +12% for a protocol live on many chains.</li>
+    </ul>
+    <p class="caveat">“Pre-token” means the snapshot records no token — it is not proof a token does not exist. Wrapped, staked and bridged products of live tokens are excluded: they are packaging, not a launch. Nothing here predicts whether or when a token is issued.</p>
+  </section>
+
+  <section class="controls" aria-label="Board controls">
+    <label>Search <input id="q" type="search" placeholder="name or slug…" autocomplete="off"></label>
+    <label>Category <select id="cat"><option value="">All categories</option></select></label>
+    <label>Chain <select id="chain"><option value="">All chains</option></select></label>
+    <label>Sort <select id="sort">
+      <option value="implied">Implied value ↓</option>
+      <option value="tvl">TVL ↓</option>
+      <option value="growth">7-day growth ↓</option>
+      <option value="age">Age ↓</option>
+    </select></label>
+    <label class="check"><input id="watch" type="checkbox"> Watchlist only</label>
+    <label class="check"><input id="live" type="checkbox"> Show already-trading list</label>
+    <p class="count" id="count"></p>
+  </section>
+
+  <section class="boardwrap" aria-label="Ranked board">
+    <table id="board">
+      <thead><tr>
+        <th data-k="rank">#</th><th data-k="name">Protocol</th><th>Category</th><th>Chains</th>
+        <th data-k="tvl">TVL</th><th data-k="growth">7d</th><th data-k="age">Age</th>
+        <th data-k="implied">Implied value</th><th></th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches this filter.</p>
+  </section>
+
+  <section class="livewrap" id="livewrap" hidden aria-label="Already trading">
+    <h2>Already trading — kept apart</h2>
+    <p>These protocols already have a token, so the board shows the market's own capitalisation, never a model value.</p>
+    <table id="livetable"><thead><tr><th>Protocol</th><th>Category</th><th>TVL</th><th>Market cap</th><th>7d</th></tr></thead>
+    <tbody id="liverows"></tbody></table>
+  </section>
+
+  <aside class="detail" id="detail" hidden aria-label="Protocol detail"></aside>
+</main>
+
+<footer>
+  <p>Snapshot <span id="asof"></span> · watchlist floor $50,000,000 · <span id="src"></span></p>
+  <p>Implied value is this entry's own claim, never make.fun's. Farm steps cost gas only; never pay anyone to claim for you.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
